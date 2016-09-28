@@ -1,10 +1,12 @@
-import PathItem = drawchat.PathItem;
-import MoveTo = drawchat.MoveTo;
-import ArcTo = drawchat.ArcTo;
-import QuadraticCurveTo = drawchat.QuadraticCurveTo;
-import LineTo = drawchat.LineTo;
-import BezierCurveTo = drawchat.BezierCurveTo;
-export class PathUtil{
+import drawchat from "@s2study/draw-api";
+
+import PathItem = drawchat.structures.PathItem;
+import MoveTo = drawchat.structures.MoveTo;
+import ArcTo = drawchat.structures.ArcTo;
+import QuadraticCurveTo = drawchat.structures.QuadraticCurveTo;
+import LineTo = drawchat.structures.LineTo;
+import BezierCurveTo = drawchat.structures.BezierCurveTo;
+export class PathUtil {
 
 	/**
 	 * パスの配列を順に描画します。
@@ -12,15 +14,14 @@ export class PathUtil{
 	 * @param items
 	 */
 	static drawPathArray(
-		context:CanvasRenderingContext2D,
-		items:PathItem[]
-	):void{
+		context: CanvasRenderingContext2D,
+		items: PathItem[]): void {
 
-		if(!items || items.length === 0){
+		if (!items || items.length === 0) {
 			return;
 		}
-		for(let item of items){
-			PathUtil.drawPath(context,item);
+		for (let item of items) {
+			PathUtil.drawPath(context, item);
 		}
 		// context.closePath();
 	}
@@ -30,14 +31,12 @@ export class PathUtil{
 	 * @param context
 	 * @param item
 	 */
-	private static drawPath(
-		context:CanvasRenderingContext2D,
-		item:PathItem
-	):void{
+	private static drawPath(context: CanvasRenderingContext2D,
+							item: PathItem): void {
 
-		switch(item.type){
+		switch (item.type) {
 
-			//moveTo
+			// moveTo
 			case 0:
 				let moveTo = (<MoveTo>item);
 				context.moveTo(
@@ -46,7 +45,7 @@ export class PathUtil{
 				);
 				break;
 
-			//arcTo
+			// arcTo
 			case 1:
 				let arcTo = (<ArcTo>item);
 				context.arcTo(
@@ -58,7 +57,7 @@ export class PathUtil{
 				);
 				break;
 
-			//quadraticCurveTo
+			// quadraticCurveTo
 			case 2:
 				let qCurveTo = (<QuadraticCurveTo>item);
 				context.quadraticCurveTo(
@@ -69,13 +68,13 @@ export class PathUtil{
 				);
 				break;
 
-			//lineTo
+			// lineTo
 			case 3:
 				let lineTo = (<LineTo>item);
-				context.lineTo(lineTo.x,lineTo.y);
+				context.lineTo(lineTo.x, lineTo.y);
 				break;
 
-			//bezierCurveTo
+			// bezierCurveTo
 			case 4:
 				let bCurveTo = (<BezierCurveTo>item);
 				context.bezierCurveTo(

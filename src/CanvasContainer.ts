@@ -2,36 +2,35 @@ import * as CombineCanvasUtil from "./CombineCanvasUtil";
 import {TransformContainer} from "./TransformContainer";
 import {ICanvasManager} from "./ICanvasManager";
 
-export class CanvasContainer{
+export class CanvasContainer {
 
 	/**
 	 * 親要素
 	 */
-	private manager:ICanvasManager;
+	private manager: ICanvasManager;
 
-	private elementList:HTMLCanvasElement[] = [];
-	private contextList:CanvasRenderingContext2D[] = [];
-	private transformList:TransformContainer[] = [];
+	private elementList: HTMLCanvasElement[] = [];
+	private contextList: CanvasRenderingContext2D[] = [];
+	private transformList: TransformContainer[] = [];
 
-	constructor(
-		manager:ICanvasManager
-	){
+	constructor(manager: ICanvasManager) {
 		this.manager = manager;
 	}
-	getSize():number{
+
+	getSize(): number {
 		return this.elementList.length;
 	}
 
-	getCanvas(index:number):CanvasRenderingContext2D{
+	getCanvas(index: number): CanvasRenderingContext2D {
 		return this.contextList.length > index ? this.contextList[index] : null;
 	}
 
-	getTransformContainer(index:number):TransformContainer{
+	getTransformContainer(index: number): TransformContainer {
 		return this.transformList.length > index ? this.transformList[index] : null;
 	}
 
-	addCanvas():number{
-		let element:HTMLCanvasElement = this.manager.createCanvas();
+	addCanvas(): number {
+		let element: HTMLCanvasElement = this.manager.createCanvas();
 		this.manager.appendChild(element);
 
 		this.elementList.push(element);
@@ -40,7 +39,7 @@ export class CanvasContainer{
 		return this.elementList.length - 1;
 	}
 
-	combineDataImage():string{
+	combineDataImage(): string {
 		return CombineCanvasUtil.combine(
 			this.manager.getWidth(),
 			this.manager.getHeight(),
@@ -49,53 +48,51 @@ export class CanvasContainer{
 		);
 	}
 
-	get width():number{
+	get width(): number {
 		return this.manager.getWidth();
 	}
 
-	get height():number{
+	get height(): number {
 		return this.manager.getHeight();
 	}
 
-	removeCanvas(index:number):void{
+	removeCanvas(index: number): void {
 		let element = this.elementList[index];
 		try {
 			this.manager.removeChild(element);
 		} catch (e) {
-			//	後始末中と重なる可能性があるので無視
+			// 後始末中と重なる可能性があるので無視
 		}
-		this.contextList.splice(index,1);
-		this.elementList.splice(index,1);
-		this.transformList.splice(index,1);
+		this.contextList.splice(index, 1);
+		this.elementList.splice(index, 1);
+		this.transformList.splice(index, 1);
 	}
 
-	sortCanvas(orders:number[]):void{
+	sortCanvas(orders: number[]): void {
 
-		//一旦全件削除
-		for(let element of this.elementList){
+		// 一旦全件削除
+		for (let element of this.elementList) {
 			try {
 				this.manager.removeChild(element);
 				// this.getParent().removeChild(element);
 			} catch (e) {
-				//無視
+				// 無視
 				console.log(e);
 			}
 		}
-		let elementList1:HTMLCanvasElement[] = [];
-		let canvasList1:CanvasRenderingContext2D[] = [];
-		let transformList1:TransformContainer[] = [];
+		let elementList1: HTMLCanvasElement[] = [];
+		let canvasList1: CanvasRenderingContext2D[] = [];
+		let transformList1: TransformContainer[] = [];
 
 		let i = 0 | 0;
-		while(i < orders.length){
+		while (i < orders.length) {
 			let order = orders[i];
-			if(order < 0 || order >= this.elementList.length || this.elementList[order] == null){
+			if (order < 0 || order >= this.elementList.length || this.elementList[order] == null) {
 				i = (i + 1) | 0;
 				continue;
 			}
 			try {
 				this.manager.appendChild(this.elementList[order]);
-				// this.getParent().appendChild(this.elementList[order]);
-
 				elementList1.push(this.elementList[order]);
 				canvasList1.push(this.contextList[order]);
 				transformList1.push(this.transformList[order]);
@@ -109,7 +106,7 @@ export class CanvasContainer{
 		this.transformList = transformList1;
 	}
 
-	clear():void{
+	clear(): void {
 		this.elementList = [];
 		this.contextList = [];
 		this.transformList = [];

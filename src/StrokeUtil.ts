@@ -1,11 +1,13 @@
-import Stroke = drawchat.Stroke;
-import Fill = drawchat.Fill;
+import drawchat from "@s2study/draw-api";
+
+import Stroke = drawchat.structures.Stroke;
+import Fill = drawchat.structures.Fill;
 
 import {FillUtil} from "./FillUtil";
 
-export class StrokeUtil{
+export class StrokeUtil {
 
-	static STROKE_COLOR_DEFAULT:string = "#FFF";
+	static STROKE_COLOR_DEFAULT: string = "#FFF";
 
 	/**
 	 * 線スタイルの設定。
@@ -13,45 +15,44 @@ export class StrokeUtil{
 	 * @param stroke
 	 */
 	static setStroke(
-		context:CanvasRenderingContext2D,
-		stroke:Stroke
-	):void{
+		context: CanvasRenderingContext2D,
+		stroke: Stroke): void {
 
-		//	塗りスタイル
-		StrokeUtil.setStrokeFill(context,stroke.fillStyle);
+		// 塗りスタイル
+		StrokeUtil.setStrokeFill(context, stroke.fillStyle);
 
-		//	破線( offsetは未対応)
-		if(stroke.dash && stroke.dash.segments){
+		// 破線( offsetは未対応)
+		if (stroke.dash && stroke.dash.segments) {
 			context.setLineDash(stroke.dash.segments);
-		}else{
+		} else {
 			context.setLineDash([]);
 		}
 
 		//
 		let style = stroke.style;
-		if(!style){
+		if (!style) {
 			context.lineWidth = 1;
 			context.lineCap = "round";
 			context.lineJoin = "round";
-			context.miterLimit =  10.0;
+			context.miterLimit = 10.0;
 			return;
 		}
 
-		//	太さ
-		if(style.thickness){
+		// 太さ
+		if (style.thickness) {
 			context.lineWidth = style.thickness;
-		}else{
+		} else {
 			context.lineWidth = 1;
 		}
 
-		//	lineCap
-		StrokeUtil.setLineCap(context,style.caps);
+		// lineCap
+		StrokeUtil.setLineCap(context, style.caps);
 
-		//	miter
-		StrokeUtil.setJoints(context,style.joints);
+		// miter
+		StrokeUtil.setJoints(context, style.joints);
 
-		//	miterLimit
-		if(!style.miterLimit){
+		// miterLimit
+		if (!style.miterLimit) {
 			context.miterLimit = 10.0;
 			return;
 		}
@@ -59,14 +60,13 @@ export class StrokeUtil{
 	}
 
 	private static setLineCap(
-		context:CanvasRenderingContext2D,
-		lineCap:number
-	):void{
-		if(!lineCap){
+		context: CanvasRenderingContext2D,
+		lineCap: number): void {
+		if (!lineCap) {
 			context.lineCap = "round";
 			return;
 		}
-		switch(lineCap){
+		switch (lineCap) {
 			case 0:
 				context.lineCap = "butt";
 				break;
@@ -80,14 +80,13 @@ export class StrokeUtil{
 	}
 
 	private static setJoints(
-		context:CanvasRenderingContext2D,
-		joints:number
-	):void{
-		if(!joints){
+		context: CanvasRenderingContext2D,
+		joints: number): void {
+		if (!joints) {
 			context.lineJoin = "round";
 			return;
 		}
-		switch(joints){
+		switch (joints) {
 			case 0:
 				context.lineJoin = "miter";
 				break;
@@ -106,31 +105,30 @@ export class StrokeUtil{
 	 * @param fill
 	 */
 	private static setStrokeFill(
-		context:CanvasRenderingContext2D,
-		fill?:Fill
-	):void{
+		context: CanvasRenderingContext2D,
+		fill?: Fill): void {
 
-		//	指定なし（デフォルト）
-		if(!fill){
+		// 指定なし（デフォルト）
+		if (!fill) {
 			context.strokeStyle = StrokeUtil.STROKE_COLOR_DEFAULT;
 			return;
 		}
 
-		//	ベタ塗り
-		if(fill.color){
+		// ベタ塗り
+		if (fill.color) {
 			context.strokeStyle = fill.color;
 			return;
 		}
 
-		//	線形グラデーション
-		if(fill.linerGradient){
-			context.strokeStyle = FillUtil.createLineGradient(context,fill.linerGradient);
+		// 線形グラデーション
+		if (fill.linerGradient) {
+			context.strokeStyle = FillUtil.createLineGradient(context, fill.linerGradient);
 			return;
 		}
 
-		//	円形グラデーション
-		if(fill.radialGradient){
-			context.strokeStyle = FillUtil.createRadialGradient(context,fill.radialGradient);
+		// 円形グラデーション
+		if (fill.radialGradient) {
+			context.strokeStyle = FillUtil.createRadialGradient(context, fill.radialGradient);
 			return;
 		}
 		context.strokeStyle = StrokeUtil.STROKE_COLOR_DEFAULT;

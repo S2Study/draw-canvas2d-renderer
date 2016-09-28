@@ -1,14 +1,13 @@
 import {TransformContainer} from "./TransformContainer";
 import {PathUtil} from "./PathUtil";
-export class ClipUtil{
+export class ClipUtil {
 
 	static setClip(
-		context:CanvasRenderingContext2D,
-		transform:TransformContainer,
-		clip?:drawchat.Clip
-	):void{
+		context: CanvasRenderingContext2D,
+		transform: TransformContainer,
+		clip?: drawchat.Clip): void {
 
-		if(!clip){
+		if (!clip) {
 			return;
 		}
 
@@ -17,7 +16,7 @@ export class ClipUtil{
 			clip.transform
 		);
 
-		PathUtil.drawPathArray(context,clip.path);
+		PathUtil.drawPathArray(context, clip.path);
 		context.clip();
 	}
 }

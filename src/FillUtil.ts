@@ -1,4 +1,4 @@
-import drawchat from "@s2study/draw-api";
+import * as drawchat from "@s2study/draw-api";
 
 import Fill = drawchat.structures.Fill;
 import LinerGradient = drawchat.structures.LinerGradient;

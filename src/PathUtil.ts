@@ -1,4 +1,4 @@
-import drawchat from "@s2study/draw-api";
+import * as drawchat from "@s2study/draw-api";
 
 import PathItem = drawchat.structures.PathItem;
 import MoveTo = drawchat.structures.MoveTo;

@@ -1,6 +1,6 @@
 {
   "name": "@s2study/draw-canvas2d-renderer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "canvas2dを用いたrenderer",
   "main": "index.js",
   "scripts": {

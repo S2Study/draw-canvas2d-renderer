@@ -1,3 +1,5 @@
+import * as drawchat from "@s2study/draw-api";
+
 import {TransformContainer} from "./TransformContainer";
 import {PathUtil} from "./PathUtil";
 export class ClipUtil {
@@ -5,7 +7,7 @@ export class ClipUtil {
 	static setClip(
 		context: CanvasRenderingContext2D,
 		transform: TransformContainer,
-		clip?: drawchat.Clip): void {
+		clip?: drawchat.structures.Clip): void {
 
 		if (!clip) {
 			return;

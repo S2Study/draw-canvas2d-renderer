@@ -1,4 +1,4 @@
-import drawchat from "@s2study/draw-api";
+import * as drawchat from "@s2study/draw-api";
 
 import Graphic = drawchat.structures.Graphic;
 import GraphicsDraw = drawchat.structures.GraphicsDraw;

@@ -20,6 +20,7 @@ export function combine(
 	}
 	let backup = contextList[0].getImageData(0, 0, width, height);
 	let output = contextList[0].createImageData(width, height);
+	contextList[0].putImageData(backup, 0, 0);
 
 	let i = 0 | 0;
 	let len = contextList.length;
@@ -52,12 +53,12 @@ function updateColor(
 	let data = target.data;
 	let updateData = addImage.data;
 	let x = 0 | 0;
-	let y = 0 | 0;
 	let width = target.width | 0;
 	let height = target.height | 0;
 	let index = 0 | 0;
 
 	while (x < width) {
+		let y = 0 | 0;
 		while (y < height) {
 			index = ((x + y * width) * 4 ) | 0;
 
@@ -88,7 +89,6 @@ function mergeColor(target: ImageData,
 	let data = target.data;
 	let addData = addImage.data;
 	let x = 0 | 0;
-	let y = 0 | 0;
 	let width = target.width | 0;
 	let height = target.height | 0;
 	let index = 0 | 0;
@@ -97,6 +97,7 @@ function mergeColor(target: ImageData,
 
 	// アルファブレンドの実行
 	while (x < width) {
+		let y = 0 | 0;
 		while (y < height) {
 
 			index = ((x + y * width) * 4 ) | 0;

@@ -26,6 +26,7 @@ typings/
 .classpath
 .tsconfig.json
 .tomcatplugin
+tslint.json
 gulpfile.js
 tsconfig.json
 typings.json

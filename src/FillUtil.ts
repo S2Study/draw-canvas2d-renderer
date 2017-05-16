@@ -5,7 +5,7 @@ import LinerGradient = drawchat.structures.LinerGradient;
 import RadialGradient = drawchat.structures.RadialGradient;
 export class FillUtil {
 
-	static FILL_COLOR_DEFAULT: string = "#000";
+	static FILL_COLOR_DEFAULT: number = 0x000;
 
 	/**
 	 * 塗りスタイルの設定。
@@ -18,7 +18,7 @@ export class FillUtil {
 
 		// ベタ塗り
 		if (fill.color) {
-			context.fillStyle = fill.color;
+			context.fillStyle = "#" + fill.color.toString(16);
 			return;
 		}
 
@@ -31,7 +31,7 @@ export class FillUtil {
 		if (fill.radialGradient) {
 			context.fillStyle = FillUtil.createRadialGradient(context, fill.radialGradient);
 		}
-		fill.color = FillUtil.FILL_COLOR_DEFAULT;
+		// fill.color = FillUtil.FILL_COLOR_DEFAULT;
 	}
 
 	/**
@@ -53,7 +53,7 @@ export class FillUtil {
 			return liner;
 		}
 		for (let stop of linerGradient.colorStops) {
-			liner.addColorStop(stop.offset, stop.color);
+			liner.addColorStop(stop.offset, "#" + stop.color.toExponential(16));
 		}
 		return liner;
 	}
@@ -78,7 +78,7 @@ export class FillUtil {
 			return radial;
 		}
 		for (let stop of radialGradient.colorStops) {
-			radial.addColorStop(stop.offset, stop.color);
+			radial.addColorStop(stop.offset, "#" + stop.color.toString(16));
 		}
 		return radial;
 	}

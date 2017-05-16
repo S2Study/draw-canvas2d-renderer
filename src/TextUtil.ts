@@ -36,10 +36,10 @@ export class TextUtil {
 		if (text.stroke) {
 			StrokeUtil.setStroke(context, text.stroke);
 		}
-		// align
-		context.textAlign = text.align != null ? text.align : "start";
-		// baseline
-		context.textBaseline = text.baseline != null ? text.baseline : "alphabetic";
+		// // align
+		// context.textAlign = text.align != null ? text.align : "start";
+		// // baseline
+		// context.textBaseline = text.baseline != null ? text.baseline : "alphabetic";
 
 		// font
 		let fontList: string[] = [];

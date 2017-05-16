@@ -21,11 +21,11 @@ export class CanvasContainer {
 		return this.elementList.length;
 	}
 
-	getCanvas(index: number): CanvasRenderingContext2D {
+	getCanvas(index: number): CanvasRenderingContext2D | null {
 		return this.contextList.length > index ? this.contextList[index] : null;
 	}
 
-	getTransformContainer(index: number): TransformContainer {
+	getTransformContainer(index: number): TransformContainer | null {
 		return this.transformList.length > index ? this.transformList[index] : null;
 	}
 
@@ -34,12 +34,12 @@ export class CanvasContainer {
 		this.manager.appendChild(element);
 
 		this.elementList.push(element);
-		this.contextList.push(element.getContext("2d"));
+		this.contextList.push(element.getContext("2d")!);
 		this.transformList.push(new TransformContainer());
 		return this.elementList.length - 1;
 	}
 
-	combineDataImage(): string {
+	combineDataImage(): string | null {
 		return CombineCanvasUtil.combine(
 			this.manager.getWidth(),
 			this.manager.getHeight(),

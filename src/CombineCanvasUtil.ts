@@ -9,7 +9,7 @@ export function combine(
 	width: number,
 	height: number,
 	backmostLayer: HTMLCanvasElement,
-	contextList: CanvasRenderingContext2D[]): string {
+	contextList: CanvasRenderingContext2D[]): string | null {
 
 	if (contextList == null || contextList.length === 0) {
 		return null;

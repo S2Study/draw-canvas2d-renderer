@@ -1,20 +1,13 @@
 import * as drawchat from "@s2study/draw-api";
 
 import Transform = drawchat.structures.Transform;
+import {TransformFactory} from "@s2study/draw-api/lib/structures/Transform";
 export class TransformContainer {
 
 	private static ROUND_DIGITS = 5;
 	private static ROUND_NUMBER = Math.pow(10, TransformContainer.ROUND_DIGITS);
 
-	static TRANSFORM_DEFAULT: Transform = {
-		a: 1,
-		b: 0,
-		c: 0,
-		d: 1,
-		x: 0,
-		y: 0
-	};
-
+	static TRANSFORM_DEFAULT: Transform = TransformFactory.createInstance();
 	private base: Transform = TransformContainer.TRANSFORM_DEFAULT;
 
 	private now: Transform = TransformContainer.TRANSFORM_DEFAULT;
@@ -74,14 +67,14 @@ export class TransformContainer {
 		// | a c tx |
 		// | b d ty |
 		// | 0 0 1  |
-		return {
-			a: TransformContainer.round(a1 * transform2.a + c1 * transform2.b),
-			b: TransformContainer.round(b1 * transform2.a + d1 * transform2.b),
-			c: TransformContainer.round(a1 * transform2.c + c1 * transform2.d),
-			d: TransformContainer.round(b1 * transform2.c + d1 * transform2.d),
-			x: TransformContainer.round(transform2.x + tx1),
-			y: TransformContainer.round(transform2.y + ty1)
-		};
+		return TransformFactory.createInstance(
+			TransformContainer.round(transform2.x + tx1),
+			TransformContainer.round(transform2.y + ty1),
+			TransformContainer.round(a1 * transform2.a + c1 * transform2.b),
+			TransformContainer.round(b1 * transform2.a + d1 * transform2.b),
+			TransformContainer.round(a1 * transform2.c + c1 * transform2.d),
+			TransformContainer.round(b1 * transform2.c + d1 * transform2.d)
+		);
 	}
 
 	private static round(number_: number) {

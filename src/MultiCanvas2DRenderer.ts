@@ -24,6 +24,7 @@ import {ClipUtil} from "./ClipUtil";
 import {GraphicsUtil} from "./GraphicsUtil";
 import {TextUtil} from "./TextUtil";
 import {ICanvasManager} from "./ICanvasManager";
+import {DrawAPIUtils} from "@s2study/draw-api/lib/DrawAPIUtils";
 
 export class MultiCanvas2DRenderer implements DrawchatRenderer {
 
@@ -70,6 +71,9 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 			return;
 		}
 		let transformContainer = this.canvasContainer.getTransformContainer(index);
+		if (transformContainer === null) {
+			return;
+		}
 		transformContainer.setBaseTransform();
 		transformContainer.setTransform(context);
 		context.clearRect(0, 0, this.canvasContainer.width, this.canvasContainer.height);
@@ -92,11 +96,15 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 		if (!draws || draws.length === 0) {
 			return;
 		}
-		let context = this.canvasContainer.getCanvas(index);
+		const context = this.canvasContainer.getCanvas(index);
 		if (!context) {
 			return;
 		}
-		this.renderDraw(context, draws, this.canvasContainer.getTransformContainer(index));
+		const container = this.canvasContainer.getTransformContainer(index);
+		if (container === null) {
+			return;
+		}
+		this.renderDraw(context, draws, container);
 	}
 
 	refresh(): void {
@@ -109,7 +117,7 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 	}
 
 	createImageDataURI(): string {
-		return this.canvasContainer.combineDataImage();
+		return DrawAPIUtils.complementString(this.canvasContainer.combineDataImage());
 	}
 
 	show(target?: number[]): void {
@@ -126,6 +134,9 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 
 	getPixelColor(x: number, y: number, layerIndex: number): number[] {
 		let canvas = this.canvasContainer.getCanvas(layerIndex);
+		if (canvas === null) {
+			return [];
+		}
 		let data: ImageData = canvas.getImageData(x, y, 1, 1);
 		return [data.data[0], data.data[1], data.data[2], data.data[3]];
 	}
@@ -157,7 +168,11 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 			return this.getCanvasAll();
 		}
 		for (let target of targets) {
-			result.push(this.canvasContainer.getCanvas(target));
+			const canvas = this.canvasContainer.getCanvas(target);
+			if (canvas === null) {
+				continue;
+			}
+			result.push(canvas);
 		}
 		return result;
 	}
@@ -167,7 +182,11 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 		let size = this.canvasContainer.getSize();
 		let i = 0 | 0;
 		while (i < size) {
-			result.push(this.canvasContainer.getCanvas(i));
+			const canvas = this.canvasContainer.getCanvas(i);
+			if (canvas === null) {
+				continue;
+			}
+			result.push(canvas);
 			i = (i + 1) | 0;
 		}
 		return result;

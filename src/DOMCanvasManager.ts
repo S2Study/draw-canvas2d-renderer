@@ -1,10 +1,11 @@
 import {ICanvasManager} from "./ICanvasManager";
+import {DrawAPIUtils} from "@s2study/draw-api/lib/DrawAPIUtils";
 export class DOMCanvasManager implements ICanvasManager {
 
-	private width: number;
-	private height: number;
+	private width: number | undefined;
+	private height: number | undefined;
 	private id: string;
-	private parent: Element;
+	private parent: Element | null;
 
 	constructor(parent: Element|string,
 				width?: number,
@@ -13,6 +14,7 @@ export class DOMCanvasManager implements ICanvasManager {
 			this.id = <string>parent;
 			this.width = width;
 			this.height = height;
+			this.parent = null;
 			return;
 		}
 		this.parent = <Element>parent;
@@ -22,8 +24,8 @@ export class DOMCanvasManager implements ICanvasManager {
 
 	createCanvas(): HTMLCanvasElement {
 		let element = this.getParent().ownerDocument.createElement("canvas");
-		element.width = this.width;
-		element.height = this.height;
+		element.width = this.width!;
+		element.height = this.height!;
 		element.style.position = "absolute";
 		return element;
 	}
@@ -37,11 +39,11 @@ export class DOMCanvasManager implements ICanvasManager {
 	}
 
 	getWidth(): number {
-		return this.width;
+		return DrawAPIUtils.complementNumber(this.width);
 	}
 
 	getHeight(): number {
-		return this.height;
+		return DrawAPIUtils.complementNumber(this.height);
 	}
 
 	removeChildren(): void {
@@ -59,7 +61,7 @@ export class DOMCanvasManager implements ICanvasManager {
 		if (this.parent != null) {
 			return this.parent;
 		}
-		this.parent = document.getElementById(this.id);
+		this.parent = document.getElementById(this.id)!;
 		this.width = this.width ? this.width : this.parent.clientWidth;
 		this.height = this.height ? this.height : this.parent.clientHeight;
 		return this.parent;

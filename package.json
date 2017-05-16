@@ -30,8 +30,8 @@
     "gulp-mocha": "^4.3.1",
     "gulp-sourcemaps": "^2.6.0",
     "gulp-tslint": "^8.0.0",
-    "gulp-typescript": "^3.0.0",
     "gulp-typedoc": "^2.0.1",
+    "gulp-typescript": "^3.0.0",
     "install": "^0.10.1",
     "istanbul": "^0.4.5",
     "merge2": "^1.0.2",
@@ -43,7 +43,8 @@
     "source-map-support": "^0.4.2",
     "ts-node": "^3.0.2",
     "tslint": "^5.2.0",
-    "typedoc": "^0.7.0"
+    "typedoc": "^0.7.0",
+    "typescript": "^2.3.2"
   },
   "dependencies": {
     "@s2study/draw-api": "^1.0.0-beta.4",

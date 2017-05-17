@@ -116,7 +116,7 @@ export class StrokeUtil {
 
 		// ベタ塗り
 		if (fill.color) {
-			context.strokeStyle = "#" + fill.color.toString(16);
+			context.strokeStyle = FillUtil.getColorString(fill.color);
 			return;
 		}
 

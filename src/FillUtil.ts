@@ -18,7 +18,7 @@ export class FillUtil {
 
 		// ベタ塗り
 		if (fill.color) {
-			context.fillStyle = "#" + fill.color.toString(16);
+			context.fillStyle = FillUtil.getColorString(fill.color);
 			return;
 		}
 
@@ -53,7 +53,7 @@ export class FillUtil {
 			return liner;
 		}
 		for (let stop of linerGradient.colorStops) {
-			liner.addColorStop(stop.offset, "#" + stop.color.toExponential(16));
+			liner.addColorStop(stop.offset, FillUtil.getColorString(stop.color));
 		}
 		return liner;
 	}
@@ -78,8 +78,12 @@ export class FillUtil {
 			return radial;
 		}
 		for (let stop of radialGradient.colorStops) {
-			radial.addColorStop(stop.offset, "#" + stop.color.toString(16));
+			radial.addColorStop(stop.offset, FillUtil.getColorString(stop.color));
 		}
 		return radial;
+	}
+
+	static getColorString(color: number): string {
+		return "#" + ( "00000000" + color.toString(16)).slice(-8);
 	}
 }

@@ -84,6 +84,6 @@ export class FillUtil {
 	}
 
 	static getColorString(color: number): string {
-		return "#" + ( "00000000" + color.toString(16)).slice(-8);
+		return `rgba(${color >> 24 & 0xff},${color >> 16 & 0xff},${color >> 8 & 0xff},${color & 0xff})`;
 	}
 }

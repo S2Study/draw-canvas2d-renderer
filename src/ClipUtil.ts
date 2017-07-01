@@ -7,7 +7,10 @@ export class ClipUtil {
 	static setClip(
 		context: CanvasRenderingContext2D,
 		transform: TransformContainer,
-		clip?: drawchat.structures.Clip): void {
+		dx: number,
+		dy: number,
+		clip?: drawchat.structures.Clip
+	): void {
 
 		if (!clip) {
 			return;
@@ -18,7 +21,7 @@ export class ClipUtil {
 			clip.transform
 		);
 
-		PathUtil.drawPathArray(context, clip.path);
+		PathUtil.drawPathArray(context, clip.path, dx, dy);
 		context.clip();
 	}
 }

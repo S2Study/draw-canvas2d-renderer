@@ -37,11 +37,11 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 	}
 
 	get width(): number {
-		return this.canvasContainer.width;
+		return this.canvasContainer.width - this.canvasContainer.dx * 2;
 	}
 
 	get height(): number {
-		return this.canvasContainer.height;
+		return this.canvasContainer.height - this.canvasContainer.dy * 2;
 	}
 
 	size(): number {
@@ -86,8 +86,20 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 		transformContainer.setTransform(context);
 
 		// 切り抜きの設定
-		ClipUtil.setClip(context, transformContainer, clip);
-		this.renderDraw(context, draws, transformContainer);
+		ClipUtil.setClip(
+			context,
+			transformContainer,
+			this.canvasContainer.dx,
+			this.canvasContainer.dy,
+			clip
+		);
+		this.renderDraw(
+			context,
+			draws,
+			transformContainer,
+			this.canvasContainer.dx,
+			this.canvasContainer.dy
+		);
 	}
 
 	renderDiff(
@@ -104,7 +116,13 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 		if (container === null) {
 			return;
 		}
-		this.renderDraw(context, draws, container);
+		this.renderDraw(
+			context,
+			draws,
+			container,
+			this.canvasContainer.dx,
+			this.canvasContainer.dy
+		);
 	}
 
 	refresh(): void {
@@ -144,20 +162,23 @@ export class MultiCanvas2DRenderer implements DrawchatRenderer {
 	private renderDraw(
 		context: CanvasRenderingContext2D,
 		draws: Draw[],
-		transformContainer: TransformContainer): void {
+		transformContainer: TransformContainer,
+		dx: number,
+		dy: number
+	): void {
 		let i = 0 | 0;
 		while (i < draws.length) {
 			let draw = draws[i];
 
 			// パス描画
 			if ((<GraphicsDraw>draw).graphics) {
-				GraphicsUtil.renderGraphics(context, transformContainer, (<GraphicsDraw>draw));
+				GraphicsUtil.renderGraphics(context, transformContainer, (<GraphicsDraw>draw), dx, dy);
 				i = (i + 1) | 0;
 				continue;
 			}
 
 			// テキスト描画
-			TextUtil.renderTextDraw(context, transformContainer, <TextDraw>draw);
+			TextUtil.renderTextDraw(context, transformContainer, <TextDraw>draw, dx, dy);
 			i = (i + 1) | 0;
 		}
 	}

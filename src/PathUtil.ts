@@ -12,16 +12,21 @@ export class PathUtil {
 	 * パスの配列を順に描画します。
 	 * @param context
 	 * @param items
+	 * @param dx
+	 * @param dy
 	 */
 	static drawPathArray(
 		context: CanvasRenderingContext2D,
-		items: PathItem[]): void {
+		items: PathItem[],
+		dx: number,
+		dy: number
+	): void {
 
 		if (!items || items.length === 0) {
 			return;
 		}
 		for (let item of items) {
-			PathUtil.drawPath(context, item);
+			PathUtil.drawPath(context, item, dx, dy);
 		}
 		// context.closePath();
 	}
@@ -30,9 +35,15 @@ export class PathUtil {
 	 * パスを描画します。
 	 * @param context
 	 * @param item
+	 * @param dx
+	 * @param dy
 	 */
-	private static drawPath(context: CanvasRenderingContext2D,
-							item: PathItem): void {
+	private static drawPath(
+		context: CanvasRenderingContext2D,
+		item: PathItem,
+		dx: number,
+		dy: number
+	): void {
 
 		switch (item.type) {
 
@@ -40,8 +51,8 @@ export class PathUtil {
 			case 0:
 				let moveTo = (<MoveTo>item);
 				context.moveTo(
-					moveTo.x,
-					moveTo.y
+					dx + moveTo.x,
+					dy + moveTo.y
 				);
 				break;
 
@@ -49,10 +60,10 @@ export class PathUtil {
 			case 1:
 				let arcTo = (<ArcTo>item);
 				context.arcTo(
-					arcTo.x1,
-					arcTo.y1,
-					arcTo.x2,
-					arcTo.y2,
+					dx + arcTo.x1,
+					dy + arcTo.y1,
+					dx + arcTo.x2,
+					dy + arcTo.y2,
 					arcTo.radius
 				);
 				break;
@@ -61,29 +72,32 @@ export class PathUtil {
 			case 2:
 				let qCurveTo = (<QuadraticCurveTo>item);
 				context.quadraticCurveTo(
-					qCurveTo.cpx,
-					qCurveTo.cpy,
-					qCurveTo.x,
-					qCurveTo.y
+					dx + qCurveTo.cpx,
+					dy + qCurveTo.cpy,
+					dx + qCurveTo.x,
+					dy + qCurveTo.y
 				);
 				break;
 
 			// lineTo
 			case 3:
 				let lineTo = (<LineTo>item);
-				context.lineTo(lineTo.x, lineTo.y);
+				context.lineTo(
+					dx + lineTo.x,
+					dy + lineTo.y
+				);
 				break;
 
 			// bezierCurveTo
 			case 4:
 				let bCurveTo = (<BezierCurveTo>item);
 				context.bezierCurveTo(
-					bCurveTo.cpx1,
-					bCurveTo.cpy1,
-					bCurveTo.cpx2,
-					bCurveTo.cpy2,
-					bCurveTo.x,
-					bCurveTo.y
+					dx + bCurveTo.cpx1,
+					dy + bCurveTo.cpy1,
+					dx + bCurveTo.cpx2,
+					dy + bCurveTo.cpy2,
+					dx + bCurveTo.x,
+					dy + bCurveTo.y
 				);
 				break;
 		}

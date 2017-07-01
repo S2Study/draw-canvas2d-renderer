@@ -15,10 +15,15 @@ export function createRenderer(manager: ICanvasManager): DrawchatRenderer {
  *        styleのposition 属性はrelativeにしておく。
  * @param width 要素の幅。指定されていない場合はrendererのデフォルト値が指定される。
  * @param height 要素の高さ。指定されていない場合はrendererのデフォルト値が指定される。
+ * @param startX X座標原点の指定
+ * @param startY Y座標原点の指定
  */
 export function createDOMRenderer(
 	parent: Element|string,
-	width?: number,
-	height?: number): DrawchatRenderer {
-	return createRenderer(new DOMCanvasManager(parent, width, height));
+	width?: number | null,
+	height?: number | null,
+	startX?: number | null,
+	startY?: number | null
+): DrawchatRenderer {
+	return createRenderer(new DOMCanvasManager(parent, width, height, startX, startY));
 }

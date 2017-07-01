@@ -30,6 +30,16 @@ export interface ICanvasManager {
 	getHeight(): number;
 
 	/**
+	 * Viewerから指定されたX座標の 0 を描画する位置を返す。
+	 */
+	getStartX(): number;
+
+	/**
+	 * Viewerから指定されたY座標の 0 を描画する位置を返す。
+	 */
+	getStartY(): number;
+
+	/**
 	 * 親要素からCanvasを全て削除。
 	 * DOMを利用しない場合、このメソッドの実装は不要。
 	 */

@@ -11,19 +11,25 @@ export class TextUtil {
 	static renderTextDraw(
 		context: CanvasRenderingContext2D,
 		transform: TransformContainer,
-		textDraw: TextDraw): void {
+		textDraw: TextDraw,
+		dx: number,
+		dy: number
+	): void {
 
 		// transform
 		transform.setTransform(context, textDraw.transform);
 		// compositeOperation:number;
 		CompositeOperationUtil.setCompositeOperation(context, textDraw.compositeOperation);
 		// text
-		TextUtil.renderText(context, textDraw.text);
+		TextUtil.renderText(context, textDraw.text, dx, dy);
 	}
 
 	private static renderText(
 		context: CanvasRenderingContext2D,
-		text: Text): void {
+		text: Text,
+		dx: number,
+		dy: number
+	): void {
 
 		if (!text.text || (!text.fill && !text.stroke)) {
 			return;
@@ -51,10 +57,10 @@ export class TextUtil {
 
 		// text
 		if (text.fill) {
-			context.fillText(text.text, text.x, text.y);
+			context.fillText(text.text, dx + text.x, dy + text.y);
 		}
 		if (text.stroke) {
-			context.strokeText(text.text, text.x, text.y);
+			context.strokeText(text.text, dx + text.x, dy + text.y);
 		}
 	}
 

@@ -14,7 +14,8 @@ export class FillUtil {
 	 */
 	static setFill(
 		context: CanvasRenderingContext2D,
-		fill: Fill): void {
+		fill: Fill
+	): void {
 
 		// ベタ塗り
 		if (fill.color) {
@@ -42,7 +43,9 @@ export class FillUtil {
 	 */
 	static createLineGradient(
 		context: CanvasRenderingContext2D,
-		linerGradient: LinerGradient): CanvasGradient {
+		linerGradient: LinerGradient
+	): CanvasGradient {
+
 		let liner = context.createLinearGradient(
 			linerGradient.x0,
 			linerGradient.y0,
@@ -64,8 +67,11 @@ export class FillUtil {
 	 * @param radialGradient
 	 * @returns {CanvasGradient}
 	 */
-	static createRadialGradient(context: CanvasRenderingContext2D,
-								radialGradient: RadialGradient): CanvasGradient {
+	static createRadialGradient(
+		context: CanvasRenderingContext2D,
+		radialGradient: RadialGradient
+	): CanvasGradient {
+
 		let radial = context.createRadialGradient(
 			radialGradient.x0,
 			radialGradient.y0,

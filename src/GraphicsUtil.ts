@@ -13,7 +13,10 @@ export class GraphicsUtil {
 	static renderGraphics(
 		context: CanvasRenderingContext2D,
 		transform: TransformContainer,
-		graphics: GraphicsDraw): void {
+		graphics: GraphicsDraw,
+		dx: number,
+		dy: number
+	): void {
 
 		// transform
 		transform.setTransform(context, graphics.transform);
@@ -22,13 +25,16 @@ export class GraphicsUtil {
 		CompositeOperationUtil.setCompositeOperation(context, graphics.compositeOperation);
 
 		for (let graphic of graphics.graphics) {
-			GraphicsUtil.renderGraphic(context, graphic);
+			GraphicsUtil.renderGraphic(context, graphic, dx, dy);
 		}
 	}
 
 	private static renderGraphic(
 		context: CanvasRenderingContext2D,
-		graphics: Graphic): void {
+		graphics: Graphic,
+		dx: number,
+		dy: number
+	): void {
 
 		// fill
 		if (graphics.fill) {
@@ -42,7 +48,7 @@ export class GraphicsUtil {
 
 		// path
 		context.beginPath();
-		PathUtil.drawPathArray(context, graphics.path);
+		PathUtil.drawPathArray(context, graphics.path, dx, dy);
 
 		// fill
 		if (graphics.fill) {

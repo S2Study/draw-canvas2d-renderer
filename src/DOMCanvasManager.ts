@@ -1,15 +1,26 @@
 import {ICanvasManager} from "./ICanvasManager";
 import {DrawAPIUtils} from "@s2study/draw-api/lib/DrawAPIUtils";
+
 export class DOMCanvasManager implements ICanvasManager {
 
-	private width: number | undefined;
-	private height: number | undefined;
+	private width: number | undefined | null;
+	private height: number | undefined | null;
+	private dx: number;
+	private dy: number;
 	private id: string;
 	private parent: Element | null;
 
-	constructor(parent: Element|string,
-				width?: number,
-				height?: number) {
+	constructor(
+		parent: Element | string,
+		width?: number | null,
+		height?: number | null,
+		dx?: number | null,
+		dy?: number | null,
+	) {
+
+		this.dx = DrawAPIUtils.complementNumber(dx, 0);
+		this.dy = DrawAPIUtils.complementNumber(dy, 0);
+
 		if (typeof parent === "string") {
 			this.id = <string>parent;
 			this.width = width;
@@ -17,9 +28,10 @@ export class DOMCanvasManager implements ICanvasManager {
 			this.parent = null;
 			return;
 		}
+
 		this.parent = <Element>parent;
-		this.width = width ? width : this.parent.clientWidth;
-		this.height = height ? height : this.parent.clientHeight;
+		this.width = DrawAPIUtils.complementNumber(width, this.parent.clientWidth);
+		this.height = DrawAPIUtils.complementNumber(height, this.parent.clientHeight);
 	}
 
 	createCanvas(): HTMLCanvasElement {
@@ -46,6 +58,14 @@ export class DOMCanvasManager implements ICanvasManager {
 		return DrawAPIUtils.complementNumber(this.height);
 	}
 
+	getStartX(): number {
+		return this.dx;
+	}
+
+	getStartY(): number {
+		return this.dy;
+	}
+
 	removeChildren(): void {
 		if (this.id !== null) {
 			this.parent = null;
@@ -58,12 +78,14 @@ export class DOMCanvasManager implements ICanvasManager {
 	}
 
 	private getParent(): Element {
+
 		if (this.parent != null) {
 			return this.parent;
 		}
 		this.parent = document.getElementById(this.id)!;
-		this.width = this.width ? this.width : this.parent.clientWidth;
-		this.height = this.height ? this.height : this.parent.clientHeight;
+
+		this.width = DrawAPIUtils.complementNumber(this.width, this.parent.clientWidth);
+		this.height = DrawAPIUtils.complementNumber(this.height, this.parent.clientHeight);
 		return this.parent;
 	}
 }

@@ -56,6 +56,14 @@ export class CanvasContainer {
 		return this.manager.getHeight();
 	}
 
+	get dx(): number {
+		return this.manager.getStartX();
+	}
+
+	get dy(): number {
+		return this.manager.getStartY();
+	}
+
 	removeCanvas(index: number): void {
 		let element = this.elementList[index];
 		try {
